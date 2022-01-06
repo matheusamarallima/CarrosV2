@@ -3,6 +3,7 @@ package com.example.Carros;
 import com.example.Carros.domain.Carro;
 import com.example.Carros.domain.CarrosService;
 import com.example.Carros.domain.DTO.CarroDTO;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class CarrosApplicationTests {
+class CarrosServiceTests {
 	@Autowired
 	CarrosService service;
 
@@ -40,6 +41,7 @@ class CarrosApplicationTests {
 
 		service.delete(id);
 
+
 	}
 
 	@Test
@@ -49,4 +51,22 @@ class CarrosApplicationTests {
 
 	}
 
+	@Test
+	public void testGet(){
+		Optional<CarroDTO> op = Optional.ofNullable(service.getCarroById(11L));
+		assertTrue(op.isPresent());
+		CarroDTO c = op.get();
+
+		assertEquals("Ferrari FF", c.getNome());
+
+	}
+	@Test
+	public void testListaPorTipo(){
+
+		assertEquals(10, service.getCarrosByTipo("classicos").size());
+		assertEquals(10, service.getCarrosByTipo("esportivos").size());
+		assertEquals(10, service.getCarrosByTipo("luxo").size());
+		assertEquals(0, service.getCarrosByTipo("xxx").size());
+
+	}
 }
