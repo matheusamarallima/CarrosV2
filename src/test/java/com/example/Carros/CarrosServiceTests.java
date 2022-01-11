@@ -3,6 +3,7 @@ package com.example.Carros;
 import com.example.Carros.domain.Carro;
 import com.example.Carros.domain.CarrosService;
 import com.example.Carros.domain.DTO.CarroDTO;
+import org.hibernate.ObjectNotFoundException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,14 @@ class CarrosServiceTests {
 		Long id = c.getId();
 		assertNotNull(id);
 
-		Optional<CarroDTO> op = Optional.ofNullable(service.getCarroById(id));
-		assertTrue(op.isPresent());
-
-		c = op.get();
+		c = service.getCarroById(id);
+		assertNotNull(c);
+		;
 		assertEquals("Grande carro", c.getNome());
 		assertEquals("esportivos", c.getTipo());
 
 		service.delete(id);
+
 
 
 	}
@@ -53,9 +54,9 @@ class CarrosServiceTests {
 
 	@Test
 	public void testGet(){
-		Optional<CarroDTO> op = Optional.ofNullable(service.getCarroById(11L));
-		assertTrue(op.isPresent());
-		CarroDTO c = op.get();
+		CarroDTO c = service.getCarroById(11L);
+		assertNotNull(c);
+
 
 		assertEquals("Ferrari FF", c.getNome());
 

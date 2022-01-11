@@ -5,6 +5,7 @@ import com.example.Carros.domain.CarrosService;
 import com.example.Carros.domain.DTO.CarroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,6 +39,7 @@ public class CarrosController {
                 ResponseEntity.ok(carros);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity post(@RequestBody Carro carro) {
 
